@@ -1,14 +1,48 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  settings = {
+    memory: 1024,
+
+    provision_files: [
+      'bash/update_os.sh',
+      'bash/install_dependancies.sh'
+      # 'bash/add_ssh_key.sh'
+    ],
+
+    sync_folders: [
+      ["~/.ssh", "/.ssh"]
+    ]
+  }
+
+  # Set Base Box and forwards port 3000
   config.vm.box = "ubuntu/trusty64"
   config.vm.network "forwarded_port", guest: 3000, host: 3000
-  config.vm.synced_folder Dir.home + '/.ssh', '/.ssh'
-  config.vm.provision :shell, path: 'bootstrap.sh'
+
+  # Setup synced folders
+  settings[:sync_folders].each do |folder|
+    config.vm.synced_folder folder.first, folder.last
+  end
+
+  # Setup provision scripts
+  settings[:provision_files].each do |file|
+    config.vm.provision :shell, path: file
+  end
+
+  # Optimize VM
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    vb.customize ["modifyvm", :id, "--memory", settings[:memory]]
+  end
+
+  # Allow SSH Stuff
+  config.ssh.forward_agent = true
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -27,7 +61,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  
+
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
