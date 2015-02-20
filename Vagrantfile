@@ -11,8 +11,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     provision_files: [
       'bash/update_os.sh',
-      'bash/install_dependancies.sh'
-      # 'bash/add_ssh_key.sh'
+      'bash/add_ssh_key.sh',
+      'bash/install_dependancies.sh',
+      'bash/install_jsedvisor.sh'
     ],
 
     sync_folders: [

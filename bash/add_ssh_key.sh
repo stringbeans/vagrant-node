@@ -2,7 +2,8 @@
 
 key_file=~/.ssh/id_rsa
 
-cp /.ssh/id_rsa ~/.ssh
+# Copy private ssh key
+cp /.ssh/id_rsa /root/.ssh
 
 echo "Regenerating SSH Key"
 
@@ -10,6 +11,7 @@ echo "Regenerating SSH Key"
 [[ -z $(ssh-add -L | grep $key_file) ]] && ssh-add $key_file
 
 echo "Adding github to known hosts"
+
 # Add github to known hosts
 mkdir /root/.ssh &&
 touch /root/.ssh/known_hosts &&
