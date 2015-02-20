@@ -3,4 +3,5 @@ Vagrant Node
 
 Vagrant node will allow you to quickly get started with edvisors development app.
 
-To start run `vagrant up && vagrant ssh`
+To start run `PASS='passphrase' vagrant up && vagrant ssh`
+after getting into vagrant run `./postinstall.sh`
