@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bash
 
 cd /vagrant
 
@@ -8,6 +8,7 @@ cd jsedvisor &&
 git checkout development &&
 
 npm install &&
+
 cd client &&
 
 npm install & bower --config.analytics=false install
