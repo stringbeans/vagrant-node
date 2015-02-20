@@ -15,6 +15,6 @@ echo "Adding github to known hosts"
 # Add github to known hosts
 touch /root/.ssh/known_hosts
 
-# Run twice can bug first time :/
+# Run twice can return null first time
 su vagrant -c "ssh-keyscan github.com >> ~/.ssh/known_hosts && chmod 600 ~/.ssh/known_hosts"
 su vagrant -c "ssh-keyscan github.com >> ~/.ssh/known_hosts && chmod 600 ~/.ssh/known_hosts"

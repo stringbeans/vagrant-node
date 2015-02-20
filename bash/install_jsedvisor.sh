@@ -2,13 +2,20 @@
 
 cd /vagrant
 
-git clone git@github.com:stringbeans/jsedvisor.git &&
-cd jsedvisor &&
+# Clone repo and install npm in root
+git clone git@github.com:stringbeans/jsedvisor.git
 
-git checkout development &&
+cd jsedvisor
 
-npm install &&
+git checkout development
+npm install
 
-cd client &&
+# move to client and install npm and bower packages
+cd client
+npm install
+bower --config.analytics=false install
 
-npm install & bower --config.analytics=false install
+# # install semver because of a bug
+# npm install semver
+# rm -rf node_modules
+# npm install
