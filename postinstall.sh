@@ -1,7 +1,3 @@
-#!/usr/bin/env bash
-
-cd /vagrant
-
 # Clone repo and install npm in root
 git clone git@github.com:stringbeans/jsedvisor.git
 

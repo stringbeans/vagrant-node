@@ -4,17 +4,11 @@
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
+p ENV['PASS']
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   settings = {
     memory: 1024,
-
-    provision_files: [
-      'bash/update_os.sh',
-      'bash/add_ssh_key.sh',
-      'bash/install_dependancies.sh',
-      'bash/install_jsedvisor.sh'
-    ],
 
     sync_folders: [
       ["~/.ssh", "/.ssh"]
@@ -30,10 +24,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.synced_folder folder.first, folder.last
   end
 
-  # Setup provision scripts
-  settings[:provision_files].each do |file|
-    config.vm.provision :shell, path: file
-  end
+  # Setup provision script
+  config.vm.provision :shell, path: 'bash/bootstrap.sh', args: ENV['PASS']
 
   # Optimize VM
   config.vm.provider "virtualbox" do |vb|
